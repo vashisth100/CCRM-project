@@ -370,8 +370,9 @@ This project was developed as part of Java Programming coursework, demonstrating
 
 ---
 
-**Author**: [Your Name]  
+**Author**: Priyanshu vashisth 
+**Reg. No.**: 24BCE10360
 **Course**: Programming in Java  
-**Institution**: [Your Institution]  
-**Date**: [Current Date]  
+**Institution**: Vellore Institute of Technology, Bhopal 
+**Date**: 05-09-2025 
 **Version**: 1.0
