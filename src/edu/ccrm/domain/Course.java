@@ -17,6 +17,8 @@ public class Course {
         this.department = department;
     }
 
+    //course details
+
     public String getCode() { return code; }
     public String getTitle() { return title; }
     public int getCredits() { return credits; }

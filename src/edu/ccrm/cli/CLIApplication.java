@@ -1,7 +1,9 @@
 package edu.ccrm.cli;
 
+//student 
 import edu.ccrm.service.StudentService;
 import edu.ccrm.domain.Student;
+//courses
 import edu.ccrm.service.CourseService;
 import edu.ccrm.domain.Course;
 import edu.ccrm.domain.Semester;

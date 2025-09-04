@@ -4,7 +4,6 @@ import edu.ccrm.domain.Student;
 import edu.ccrm.domain.Course;
 
 public class EnrollmentService {
-    // No global map needed for our simple logic (we store in Student objects)
     public boolean enrollStudentInCourse(Student student, Course course) {
         if (student != null && course != null) {
             // Could add business rules (e.g., max credits) here
