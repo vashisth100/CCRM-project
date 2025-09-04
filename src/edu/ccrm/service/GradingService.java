@@ -3,7 +3,6 @@ package edu.ccrm.service;
 import edu.ccrm.domain.*;
 
 public class GradingService {
-    // You may have a more complex mapping/rules
     public static Grade calculateGrade(int marks) {
         if (marks >= 90) return Grade.S;
         else if (marks >= 80) return Grade.A;

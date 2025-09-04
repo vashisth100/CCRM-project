@@ -5,6 +5,7 @@ public class TranscriptEntry {
     private int marks;
     private Grade grade;
 
+    //transcript for grades
     public TranscriptEntry(String courseCode, int marks, Grade grade) {
         this.courseCode = courseCode;
         this.marks = marks;
