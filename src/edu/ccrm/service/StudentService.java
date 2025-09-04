@@ -4,7 +4,7 @@ import edu.ccrm.domain.Student;
 import java.util.*;
 
 public class StudentService {
-    // Map of regNo (or id) to Student object
+    // Map of regNo (or id) to Student object {details}
     private Map<String, Student> studentMap = new HashMap<>();
 
     public void addStudent(Student student) {

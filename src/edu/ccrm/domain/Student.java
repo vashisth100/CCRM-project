@@ -11,7 +11,8 @@ public class Student extends Person {
     private List<String> enrolledCourses; 
     
     private Map<String, TranscriptEntry> transcript = new HashMap<>();
-
+ 
+   //student details
     public Student(String id, String regNo, String fullName, String email) {
         super(id, fullName, email);
         this.regNo = regNo;
