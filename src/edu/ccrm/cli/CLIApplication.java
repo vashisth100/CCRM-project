@@ -14,8 +14,9 @@ import edu.ccrm.domain.TranscriptEntry;
 //io
 import edu.ccrm.io.ImportExportService;
 import java.io.IOException;
-
-
+//utility
+import edu.ccrm.util.BackupUtility;
+import java.nio.file.Paths;
 
 import java.util.Scanner;
 
@@ -44,6 +45,7 @@ public class CLIApplication {
             System.out.println("10. Export Students to CSV");
             System.out.println("11. Import Courses from CSV");
             System.out.println("12. Export Courses to CSV");
+            System.out.println("13. Backup Data Directory");
             System.out.println("0. Exit");
             System.out.print("Select: ");
             int choice = sc.nextInt();
@@ -63,7 +65,7 @@ public class CLIApplication {
                 case 10: exportStudentsMenu(); break;
                 case 11: importCoursesMenu(); break;
                 case 12: exportCoursesMenu(); break;
-
+                case 13: backupDataMenu(); break;
                 default: System.out.println("Invalid option.");
             }
         }
@@ -233,6 +235,19 @@ public class CLIApplication {
         System.out.println("Exported courses.");
     } catch (IOException e) {
         System.out.println("Failed to export courses: " + e.getMessage());
+    }
+    }
+
+    private void backupDataMenu() {
+    System.out.print("Enter source directory to backup: ");
+    String source = sc.nextLine();
+    System.out.print("Enter backup target directory: ");
+    String dest = sc.nextLine();
+    try {
+        BackupUtility.backupDirectory(Paths.get(source), Paths.get(dest));
+        System.out.println("Backup complete!");
+    } catch (Exception e) {
+        System.out.println("Backup failed: " + e.getMessage());
     }
     }
 
