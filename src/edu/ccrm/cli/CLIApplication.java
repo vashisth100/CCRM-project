@@ -11,6 +11,10 @@ import edu.ccrm.service.EnrollmentService;
 //grades
 import edu.ccrm.service.GradingService;
 import edu.ccrm.domain.TranscriptEntry;
+//io
+import edu.ccrm.io.ImportExportService;
+import java.io.IOException;
+
 
 
 import java.util.Scanner;
@@ -20,6 +24,7 @@ public class CLIApplication {
     private CourseService courseService = new CourseService();
     private EnrollmentService enrollmentService = new EnrollmentService();
     private GradingService gradingService = new GradingService();
+    private ImportExportService importExportService = new ImportExportService();
 
     private Scanner sc = new Scanner(System.in);
 
@@ -35,6 +40,10 @@ public class CLIApplication {
             System.out.println("6. View Student Enrollments");
             System.out.println("7. Assign Grade/Marks");
             System.out.println("8. View Student Transcript");
+            System.out.println("9. Import Students from CSV");
+            System.out.println("10. Export Students to CSV");
+            System.out.println("11. Import Courses from CSV");
+            System.out.println("12. Export Courses to CSV");
             System.out.println("0. Exit");
             System.out.print("Select: ");
             int choice = sc.nextInt();
@@ -50,6 +59,11 @@ public class CLIApplication {
                 case 6: viewStudentEnrollmentsMenu(); break;
                 case 7: assignGradeMenu(); break;
                 case 8: viewTranscriptMenu(); break;
+                case 9: importStudentsMenu(); break;
+                case 10: exportStudentsMenu(); break;
+                case 11: importCoursesMenu(); break;
+                case 12: exportCoursesMenu(); break;
+
                 default: System.out.println("Invalid option.");
             }
         }
@@ -177,5 +191,50 @@ public class CLIApplication {
         System.out.printf("GPA: %.2f\n", gpa);
     }
     }
+
+    private void importStudentsMenu() {
+    System.out.print("Enter file path for CSV: ");
+    String path = sc.nextLine();
+    try {
+        int count = importExportService.importStudents(path, studentService);
+        System.out.println("Imported " + count + " students.");
+    } catch (IOException e) {
+        System.out.println("Failed to import students: " + e.getMessage());
+    }
+    }
+
+    private void exportStudentsMenu() {
+    System.out.print("Enter file path to save CSV: ");
+    String path = sc.nextLine();
+    try {
+        importExportService.exportStudents(path, studentService);
+        System.out.println("Exported students.");
+    } catch (IOException e) {
+        System.out.println("Failed to export students: " + e.getMessage());
+    }
+    }
+    
+    private void importCoursesMenu() {
+    System.out.print("Enter file path for courses CSV: ");
+    String path = sc.nextLine();
+    try {
+        int count = importExportService.importCourses(path, courseService);
+        System.out.println("Imported " + count + " courses.");
+    } catch (IOException e) {
+        System.out.println("Failed to import courses: " + e.getMessage());
+    }
+    }
+
+    private void exportCoursesMenu() {
+    System.out.print("Enter file path to save courses CSV: ");
+    String path = sc.nextLine();
+    try {
+        importExportService.exportCourses(path, courseService);
+        System.out.println("Exported courses.");
+    } catch (IOException e) {
+        System.out.println("Failed to export courses: " + e.getMessage());
+    }
+    }
+
 
 }
