@@ -161,7 +161,7 @@ public class CLIApplication {
     String regNo = sc.nextLine();
     System.out.print("Enter Course Code: ");
     String courseCode = sc.nextLine();
-    System.out.print("Enter Marks (0–100): ");
+    System.out.print("Enter Marks (0-100): ");
     int marks = sc.nextInt(); sc.nextLine();
 
     Student s = studentService.getStudent(regNo);
