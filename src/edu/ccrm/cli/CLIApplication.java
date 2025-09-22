@@ -3,17 +3,21 @@ package edu.ccrm.cli;
 //student 
 import edu.ccrm.service.StudentService;
 import edu.ccrm.domain.Student;
+
 //courses
 import edu.ccrm.service.CourseService;
 import edu.ccrm.domain.Course;
 import edu.ccrm.domain.Semester;
 import edu.ccrm.service.EnrollmentService;
+
 //grades
 import edu.ccrm.service.GradingService;
 import edu.ccrm.domain.TranscriptEntry;
+
 //io
 import edu.ccrm.io.ImportExportService;
 import java.io.IOException;
+
 //utility
 import edu.ccrm.util.BackupUtility;
 import java.nio.file.Paths;
@@ -46,6 +50,12 @@ public class CLIApplication {
             System.out.println("11. Import Courses from CSV");
             System.out.println("12. Export Courses to CSV");
             System.out.println("13. Backup Data Directory");
+            System.out.println("14. Edit Student");
+            System.out.println("15. Delete Student");
+            System.out.println("16. Search Student by Name");
+            System.out.println("17. Edit Course");
+            System.out.println("18. Delete Course");
+            System.out.println("19. Search Course by Title");
             System.out.println("0. Exit");
             System.out.print("Select: ");
             int choice = sc.nextInt();
@@ -66,24 +76,35 @@ public class CLIApplication {
                 case 11: importCoursesMenu(); break;
                 case 12: exportCoursesMenu(); break;
                 case 13: backupDataMenu(); break;
+                case 14: editStudentMenu(); break;
+                case 15: deleteStudentMenu(); break;
+                case 16: searchStudentMenu(); break;
+                case 17: editCourseMenu(); break;
+                case 18: deleteCourseMenu(); break;
+                case 19: searchCourseMenu(); break;
                 default: System.out.println("Invalid option.");
             }
         }
     }
 
     private void addStudentMenu() {
-        System.out.print("Enter ID: ");
-        String id = sc.nextLine();
-        System.out.print("Enter RegNo: ");
-        String regNo = sc.nextLine();
-        System.out.print("Enter name: ");
-        String name = sc.nextLine();
-        System.out.print("Enter email: ");
-        String email = sc.nextLine();
+    System.out.print("Enter ID: ");
+    String id = sc.nextLine();
+    String regNo = sc.nextLine();
+    System.out.print("Enter name: ");
+    String name = sc.nextLine();
+    System.out.print("Enter email: ");
+    String email = sc.nextLine();
 
-        Student s = new Student(id, regNo, name, email);
+    Student s = new Student(id, regNo, name, email);
+    try {
         studentService.addStudent(s);
+        System.out.println("Student added.");
+    } catch (edu.ccrm.exception.DuplicateStudentException e) {
+        System.out.println(e.getMessage());
     }
+    }
+
 
     private void listStudentsMenu() {
         System.out.println("=== All Students ===");
@@ -93,23 +114,37 @@ public class CLIApplication {
     }
 
     private void addCourseMenu() {
-        System.out.print("Enter code: ");
-        String code = sc.nextLine();
-        System.out.print("Enter title: ");
-        String title = sc.nextLine();
-        System.out.print("Enter credits (integer): ");
-        int credits = sc.nextInt();
-        sc.nextLine(); // Consume leftover newline
-        System.out.print("Enter instructorId (optional): ");
-        String instructorId = sc.nextLine();
-        System.out.print("Enter semester (SPRING, SUMMER, FALL): ");
-        String semStr = sc.nextLine().toUpperCase();
-        Semester semester = Semester.valueOf(semStr);
-        System.out.print("Enter department: ");
-        String department = sc.nextLine();
+    System.out.print("Enter code: ");
+    String code = sc.nextLine();
+    System.out.print("Enter title: ");
+    String title = sc.nextLine();
+    System.out.print("Enter credits (integer): ");
+    int credits = sc.nextInt();
+    sc.nextLine();
+    System.out.print("Enter instructorId (optional): ");
+    String instructorId = sc.nextLine();
+    System.out.print("Enter semester (SPRING, SUMMER, FALL): ");
+    String semStr = sc.nextLine().toUpperCase();
+    Semester semester = Semester.valueOf(semStr);
+    System.out.print("Enter department: ");
+    String department = sc.nextLine();
 
-        Course c = new Course(code, title, credits, instructorId, semester, department);
+    // Use the builder instead of constructor
+    Course c = new Course.CourseBuilder(code)
+        .title(title)
+        .credits(credits)
+        .instructorId(instructorId)
+        .semester(semester)
+        .department(department)
+        .build();
+
+        try {
         courseService.addCourse(c);
+        System.out.println("Course added.");
+        } catch (edu.ccrm.exception.DuplicateCourseException e) {
+        System.out.println(e.getMessage());
+        }
+
     }
 
     private void listCoursesMenu() {
@@ -251,5 +286,53 @@ public class CLIApplication {
     }
     }
 
+    private void editStudentMenu() {
+    System.out.print("Enter RegNo: ");
+    String regNo = sc.nextLine();
+    System.out.print("Enter new name: ");
+    String name = sc.nextLine();
+    System.out.print("Enter new email: ");
+    String email = sc.nextLine();
+    boolean ok = studentService.editStudent(regNo, name, email);
+    System.out.println(ok ? "Student updated." : "Student not found.");
+    }
 
+    private void deleteStudentMenu() {
+    System.out.print("Enter RegNo: ");
+    String regNo = sc.nextLine();
+    boolean ok = studentService.deleteStudent(regNo);
+    System.out.println(ok ? "Student deleted." : "Student not found.");
+    }
+
+    private void searchStudentMenu() {
+    System.out.print("Enter name to search: ");
+    String name = sc.nextLine();
+    List<Student> results = studentService.searchStudentsByName(name);
+    results.forEach(s -> System.out.println(s.getProfile()));
+    }
+
+    private void editCourseMenu() {
+    System.out.print("Enter Course Code: ");
+    String code = sc.nextLine();
+    System.out.print("Enter new title: ");
+    String title = sc.nextLine();
+    System.out.print("Enter new credits: ");
+    int credits = sc.nextInt(); sc.nextLine();
+    boolean ok = courseService.editCourse(code, title, credits);
+    System.out.println(ok ? "Course updated." : "Course not found.");
+    }
+
+    private void deleteCourseMenu() {
+    System.out.print("Enter Course Code: ");
+    String code = sc.nextLine();
+    boolean ok = courseService.deleteCourse(code);
+    System.out.println(ok ? "Course deleted." : "Course not found.");
+    }
+
+    private void searchCourseMenu() {
+    System.out.print("Enter title to search: ");
+    String title = sc.nextLine();
+    List<Course> results = courseService.searchCoursesByTitle(title);
+    results.forEach(c -> System.out.println(c));
+    }
 }

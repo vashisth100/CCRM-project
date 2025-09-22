@@ -8,17 +8,17 @@ public class Course {
     private Semester semester;
     private String department;
 
-    public Course(String code, String title, int credits, String instructorId, Semester semester, String department) {
-        this.code = code;
-        this.title = title;
-        this.credits = credits;
-        this.instructorId = instructorId;
-        this.semester = semester;
-        this.department = department;
+    // Private constructor used by the Builder
+    private Course(CourseBuilder builder) {
+        this.code = builder.code;
+        this.title = builder.title;
+        this.credits = builder.credits;
+        this.instructorId = builder.instructorId;
+        this.semester = builder.semester;
+        this.department = builder.department;
     }
 
-    //course details
-
+    // Getters
     public String getCode() { return code; }
     public String getTitle() { return title; }
     public int getCredits() { return credits; }
@@ -26,15 +26,27 @@ public class Course {
     public Semester getSemester() { return semester; }
     public String getDepartment() { return department; }
 
-    public void setTitle(String title) { this.title = title; }
-    public void setCredits(int credits) { this.credits = credits; }
-    public void setInstructorId(String instructorId) { this.instructorId = instructorId; }
-    public void setSemester(Semester semester) { this.semester = semester; }
-    public void setDepartment(String department) { this.department = department; }
-
     @Override
     public String toString() {
-        return String.format("Course [%s: %s, Credits: %d, Instructor: %s, Semester: %s, Dept: %s]",
+        return String.format("Course[%s: %s, Credits: %d, Instructor: %s, Sem: %s, Dept: %s]",
             code, title, credits, instructorId, semester, department);
+    }
+
+    // --- Inner static Builder class ---
+    public static class CourseBuilder {
+        private String code;
+        private String title;
+        private int credits;
+        private String instructorId;
+        private Semester semester;
+        private String department;
+
+        public CourseBuilder(String code) { this.code = code; }
+        public CourseBuilder title(String title) { this.title = title; return this; }
+        public CourseBuilder credits(int credits) { this.credits = credits; return this; }
+        public CourseBuilder instructorId(String instructorId) { this.instructorId = instructorId; return this; }
+        public CourseBuilder semester(Semester semester) { this.semester = semester; return this; }
+        public CourseBuilder department(String department) { this.department = department; return this; }
+        public Course build() { return new Course(this); }
     }
 }

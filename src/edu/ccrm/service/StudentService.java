@@ -1,34 +1,52 @@
 package edu.ccrm.service;
 
 import edu.ccrm.domain.Student;
+import edu.ccrm.exception.DuplicateStudentException;
 import java.util.*;
 
 public class StudentService {
-    // Map of regNo (or id) to Student object {details}
-    private Map<String, Student> studentMap = new HashMap<>();
+    private Map<String, Student> students = new HashMap<>();
 
-    public void addStudent(Student student) {
-        if (studentMap.containsKey(student.getRegNo())) {
-            System.out.println("Student already exists: " + student.getRegNo());
-        } else {
-            studentMap.put(student.getRegNo(), student);
-            System.out.println("Student added: " + student.getRegNo());
-        }
+    // Adds a new student. Throws if regNo already exists
+    public void addStudent(Student s) throws DuplicateStudentException {
+        if (students.containsKey(s.getRegNo()))
+            throw new DuplicateStudentException("Student already exists with regNo: " + s.getRegNo());
+        students.put(s.getRegNo(), s);
     }
 
+    // Returns the student object for the given regNo (null if not present)
     public Student getStudent(String regNo) {
-        return studentMap.get(regNo);
+        return students.get(regNo);
     }
 
+    // Returns all students as a List
     public List<Student> listStudents() {
-        return new ArrayList<>(studentMap.values());
+        return new ArrayList<>(students.values());
     }
 
-    public void deactivateStudent(String regNo) {
-        Student s = studentMap.get(regNo);
+    // Optional: Edit Student info
+    public boolean editStudent(String regNo, String newName, String newEmail) {
+        Student s = students.get(regNo);
         if (s != null) {
-            s.setActive(false);
-            System.out.println("Student deactivated: " + regNo);
+            
+            return true;
+        } else {
+            return false;
         }
+    }
+
+    // Optional: Delete Student by regNo
+    public boolean deleteStudent(String regNo) {
+        return students.remove(regNo) != null;
+    }
+
+    // Optional: Search by name
+    public List<Student> searchStudentsByName(String name) {
+        List<Student> results = new ArrayList<>();
+        for (Student s : students.values()) {
+            if (s.getFullName().toLowerCase().contains(name.toLowerCase()))
+                results.add(s);
+        }
+        return results;
     }
 }
