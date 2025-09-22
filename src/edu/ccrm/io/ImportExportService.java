@@ -18,8 +18,13 @@ public class ImportExportService {
             String[] parts = line.strip().split(",");
             if (parts.length >= 4) {
                 Student s = new Student(parts[0], parts[1], parts[2], parts[3]);
-                studentService.addStudent(s);
-                count++;
+                try {
+                    studentService.addStudent(s);
+                    count++;
+                } catch (edu.ccrm.exception.DuplicateStudentException e) {
+                    // You can optionally print:
+                    // System.out.println("Duplicate student (skipped): " + s.getRegNo());
+                }
             }
         }
         return count;
@@ -41,16 +46,21 @@ public class ImportExportService {
         for (String line : lines) {
             String[] parts = line.strip().split(",");
             if (parts.length >= 6) {
-                Course c = new Course(
-                    parts[0], // code
-                    parts[1], // title
-                    Integer.parseInt(parts[2]), // credits
-                    parts[3], // instructorId
-                    Semester.valueOf(parts[4].toUpperCase()),
-                    parts[5] // department
-                );
-                courseService.addCourse(c);
-                count++;
+                Course c = new Course.CourseBuilder(parts[0])
+                    .title(parts[1])
+                    .credits(Integer.parseInt(parts[2]))
+                    .instructorId(parts[3])
+                    .semester(Semester.valueOf(parts[4].toUpperCase()))
+                    .department(parts[5])
+                    .build();
+
+                try {
+                    courseService.addCourse(c);
+                    count++;
+                } catch (edu.ccrm.exception.DuplicateCourseException e) {
+                    // You can optionally print:
+                    // System.out.println("Duplicate course (skipped): " + c.getCode());
+                }
             }
         }
         return count;
