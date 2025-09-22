@@ -248,8 +248,6 @@ src/edu/ccrm/
 │   └── DatabaseConfig.java       # Data persistence settings
 ├── exception/                     # Custom Exceptions
 │   ├── DuplicateEnrollmentException.java    # Checked exception
-│   ├── MaxCreditLimitExceededException.java # Runtime exception
-│   └── InvalidGradeException.java           # Validation exception
 └── CCRMApplication.java           # Main application entry point
 ```
 
