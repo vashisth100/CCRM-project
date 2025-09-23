@@ -156,7 +156,7 @@ javac -version
 ```
 
 **Screenshot: Java Installation Verification**
-![Java Version Check](screenshots/java-version-check.png)
+![Java Version Check](<![alt text](image.png)>)
 _Figure 1: Verifying Java installation with version commands_
 
 ## Eclipse IDE Setup
