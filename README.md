@@ -159,10 +159,7 @@ javac -version
 <<<<<<< HEAD
 ![Java Version Check](<![alt text](image.png)>)
 =======
-![Java Version Check](<img width="831" height="197" alt="image" src="https://github.com/user-attachments/assets/48e571a5-4f2c-4d51-803a-70787b0555f7" />
-)
->>>>>>> 62a23115f2092846a6300752488a4c7a44799565
-_Figure 1: Verifying Java installation with version commands_
+![Java Version Check](<img width="831" height="197" alt="image" src="https://github.com/user-attachments/assets/48e571a5-4f2c-4d51-803a-70787b0555f7" />)
 
 ## Eclipse IDE Setup
 
@@ -180,8 +177,7 @@ _Figure 1: Verifying Java installation with version commands_
 4. Create `src` folder structure with packages
 
 **Screenshot: Eclipse Project Setup**
-![Eclipse Project Creation](screenshots/eclipse-project-setup.png)
-_Figure 2: Creating new Java project in Eclipse IDE_
+![alt text](image-1.png)
 
 ### Run Configuration
 
@@ -190,8 +186,7 @@ _Figure 2: Creating new Java project in Eclipse IDE_
 3. Set up assertions: **Run Configurations** → **Arguments** → **VM arguments**: `-ea`
 
 **Screenshot: Eclipse Run Configuration**
-![Eclipse Run Config](screenshots/eclipse-run-config.png)
-_Figure 3: Configuring run settings in Eclipse_
+(![alt text](image.png))
 
 ## Technical Implementation Mapping
 
@@ -348,7 +343,6 @@ When you run the application, you'll experience:
 9. **Reports**: Generate academic reports using Stream operations
 10. **Platform Info**: Display Java SE vs ME vs EE summary
 
-    
 ## Test Data
 
 The project includes sample test data in the `test-data/` directory:
