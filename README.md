@@ -348,22 +348,7 @@ When you run the application, you'll experience:
 9. **Reports**: Generate academic reports using Stream operations
 10. **Platform Info**: Display Java SE vs ME vs EE summary
 
-## Screenshots
-
-### Application Screenshots
-
-![Main Menu](screenshots/main-menu.png)
-_Figure 4: Main application menu showing all available operations_
-
-![Student Management](screenshots/student-operations.png)
-_Figure 5: Student management interface with CRUD operations_
-
-![File Operations](screenshots/file-operations.png)
-_Figure 6: File import/export and backup functionality_
-
-![Backup Structure](screenshots/backup-folder-structure.png)
-_Figure 7: Generated backup folder with timestamped organization_
-
+    
 ## Test Data
 
 The project includes sample test data in the `test-data/` directory:
